@@ -9,7 +9,7 @@
 <body>
     <div class="timer">
         <p>time left:</p>
-        <p id="time" class="value">120</p>
+        <p id="time" class="value">10</p>
     </div>
     <div class="div">
         <div style="background-color: green;">
@@ -53,6 +53,11 @@
         <source src="https://github.com/Charleywang246/human-match-ui/blob/main/end.mp3" type="audio/mpeg">
         <source src="https://github.com/Charleywang246/human-match-ui/raw/main/end.mp3" type="audio/mpeg">
     </audio>
+    <audio id="endgame">
+        <source src="./endgame.mp3" type="audio/mpeg">
+        <source src="https://github.com/Charleywang246/human-match-ui/blob/main/endgame.mp3" type="audio/mpeg">
+        <source src="https://github.com/Charleywang246/human-match-ui/raw/main/endgame.mp3" type="audio/mpeg">
+    </audio>
     <script>
         countdown = false
         x = 0;
@@ -74,10 +79,18 @@
                             num = Number(document.getElementById("time").innerText)
                             if (num > 0) {
                                 document.getElementById("time").innerText = num-1;
-                            } else {
-                                document.getElementById("end").play();
-                                clearInterval(x)
-                                countdown = false
+                                if (Number(document.getElementById("time").innerText) == 5) {
+                                    document.getElementById("endgame").play();
+                                }
+                                if (Number(document.getElementById("time").innerText) == 1) {
+                                    setTimeout(()=>{
+                                        document.getElementById("a").innerText = 0;
+                                        document.getElementById("b").innerText = 0;
+                                        document.getElementById("end").play();
+                                        clearInterval(x)
+                                        countdown = false
+                                    },1000)
+                                }
                             }
                         },1000)
                     } else {
@@ -119,14 +132,20 @@
                     document.getElementById("p").innerText = Number(document.getElementById("p").innerText) + 1
                     break
                 case "x":
-                    document.getElementById("c").innerText = Number(document.getElementById("c").innerText) - 1
+                    document.getElementById("c").innerText = Number(document.getElementById("c").innerText) + 1
                     break
                 case ",":
+                    document.getElementById("d").innerText = Number(document.getElementById("d").innerText) + 1
+                    break
+                case "c":
+                    document.getElementById("c").innerText = Number(document.getElementById("c").innerText) - 1
+                    break
+                case "m":
                     document.getElementById("d").innerText = Number(document.getElementById("d").innerText) - 1
                     break
                 case "0":
                     clearInterval(x)
-                    document.getElementById('time').innerHTML = 120;
+                    document.getElementById('time').innerHTML = 10;
                     document.getElementById('a').innerText = 0;
                     document.getElementById('b').innerText = 0;
                     document.getElementById('c').innerText = 0
