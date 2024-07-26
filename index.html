@@ -9,7 +9,7 @@
 <body>
     <div class="timer">
         <p>time left:</p>
-        <p id="time" class="value">120</p>
+        <p id="time" class="value">150</p>
     </div>
     <div class="div">
         <div style="background-color: green;">
@@ -44,7 +44,7 @@
         </div>
     </div>
     <audio id="start">
-        <source src="./start.mp3" type="audio/mpeg">
+        <source src="./startteleop.mp3" type="audio/mpeg">
         <source src="https://github.com/Charleywang246/human-match-ui/blob/main/start.mp3" type="audio/mpeg">
         <source src="https://github.com/Charleywang246/human-match-ui/raw/main/start.mp3" type="audio/mpeg">
     </audio>
@@ -58,6 +58,12 @@
         <source src="https://github.com/Charleywang246/human-match-ui/blob/main/endgame.mp3" type="audio/mpeg">
         <source src="https://github.com/Charleywang246/human-match-ui/raw/main/endgame.mp3" type="audio/mpeg">
     </audio>
+    <audio id="startauto">
+        <source src="./startauto.mp3" type="audio/mpeg">
+        <source src="https://github.com/Charleywang246/human-match-ui/blob/main/startauto.mp3" type="audio/mpeg">
+        <source src="https://github.com/Charleywang246/human-match-ui/raw/main/startauto.mp3" type="audio/mpeg">
+    </audio>
+    
     <script>
         countdown = false
         x = 0;
@@ -74,11 +80,50 @@
                 case " ":
                     countdown = !countdown
                     if (countdown) {
-                        document.getElementById("start").play();
+                        val = Number(document.getElementById("time").innerText)
+                        if (val <= 150 && val > 135) {
+                            document.getElementById("startauto").play();
+                        }
+                        if (val <= 135) {
+                            document.getElementById("start").play();
+                        }
                         x = setInterval(()=>{
                             num = Number(document.getElementById("time").innerText)
                             if (num > 0) {
                                 document.getElementById("time").innerText = num-1;
+                                if (Number(document.getElementById("time").innerText) == 135) {
+                                    document.getElementById("end").play();
+                                    clearInterval(x)
+                                    setTimeout(()=>{
+                                        document.getElementById("start").play();
+                                        x = setInterval(()=>{
+                                            num = Number(document.getElementById("time").innerText)
+                                            if (num > 0) {
+                                                document.getElementById("time").innerText = num-1;
+                                                if (Number(document.getElementById("time").innerText) == 135) {
+                                                    document.getElementById("end").play();
+                                                    clearInterval(x)
+                                                    setTimeout(()=>{
+                                                        document.getElementById("start").play();
+                                                        setInterval(x)
+                                                    },3000);
+                                                }
+                                                if (Number(document.getElementById("time").innerText) == 20) {
+                                                    document.getElementById("endgame").play();
+                                                }
+                                                if (Number(document.getElementById("time").innerText) == 1) {
+                                                    setTimeout(()=>{
+                                                        document.getElementById("a").innerText = 0;
+                                                        document.getElementById("b").innerText = 0;
+                                                        document.getElementById("end").play();
+                                                        clearInterval(x)
+                                                        countdown = false
+                                                    },1000)
+                                                }
+                                            }
+                                        },1000)
+                                    },3000);
+                                }
                                 if (Number(document.getElementById("time").innerText) == 20) {
                                     document.getElementById("endgame").play();
                                 }
@@ -145,7 +190,7 @@
                     break
                 case "0":
                     clearInterval(x)
-                    document.getElementById('time').innerHTML = 120;
+                    document.getElementById('time').innerHTML = 150;
                     document.getElementById('a').innerText = 0;
                     document.getElementById('b').innerText = 0;
                     document.getElementById('c').innerText = 0
