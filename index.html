@@ -153,8 +153,7 @@
                 case "s":
                     if (Number(document.getElementById('time').innerText) >= 135) {
                         document.getElementById("c").innerText = Number(document.getElementById("c").innerText) + 5
-                    }
-                    if (Number(document.getElementById('a').innerText) > 0) {
+                    } else if (Number(document.getElementById('a').innerText) > 0) {
                         document.getElementById("c").innerText = Number(document.getElementById("c").innerText) + 5
                         document.getElementById("k").innerText = Number(document.getElementById("k").innerText) + 1
                     } else {
@@ -165,8 +164,7 @@
                 case "k":
                     if (Number(document.getElementById('time').innerText) >= 135) {
                         document.getElementById("d").innerText = Number(document.getElementById("d").innerText) + 5
-                    }
-                    if (Number(document.getElementById('b').innerText) > 0) {
+                    } else if (Number(document.getElementById('b').innerText) > 0) {
                         document.getElementById("d").innerText = Number(document.getElementById("d").innerText) + 5
                         document.getElementById("n").innerText = Number(document.getElementById("n").innerText) + 1
                     } else {
